@@ -3,9 +3,9 @@ import styled from "styled-components/native";
 import colors from "../../styles/colors";
 
 export const Text = styled.Text`
-  font-size: 16px;
+  font-size: 24px;
   
-  text-align: justify;
+  text-align: center;
 
   color: ${colors['Black']};
 `;
