@@ -1,6 +1,6 @@
 /**COMPONENTS */
 import { Screen, Text } from "./styles";
-import { Illustration } from "../../components";
+import { Illustration, Description } from "../../components";
 import { IllustrationImage } from "../../svgs";
 
 const WelcomeScreen = () => {
@@ -10,6 +10,7 @@ const WelcomeScreen = () => {
         File={IllustrationImage}
         alt="Ilustração"
       />
+      <Description>Escute música sua músicas ou áudios salvos de qualquer lugar através de seu celular</Description>
     </Screen>
   )
 };
