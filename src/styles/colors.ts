@@ -4,7 +4,8 @@ const colors = {
   'USAFA Blue': '#0353A4',
   'Honolulu': '#006DAA',
   'Prussion Blue': '#003559',
-  'Black': '#000000'
+  'Black': '#000000',
+  'Gray': '#E0E0E0'
 };
 
 export default colors;

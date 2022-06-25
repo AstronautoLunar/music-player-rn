@@ -1,13 +1,19 @@
+/**CORE */
 import { useRef, useEffect } from "react";
-import { Animated } from "react-native";
+import { Animated, StyleProp, ViewStyle } from "react-native";
 import { Area, Text, PressArea } from "./style"
 
-type ButtonNavigateProps = {
+/**TYPES */
+import { themeProps } from "./types";
+
+type ButtonNavigateProps = themeProps & {
   children: string;
-  onPress: () => void;
+  onPress?: () => void;
+  width?: string;
+  style?: StyleProp<ViewStyle>;
 }
 
-const ButtonNavigate = ({ children, onPress }: ButtonNavigateProps) => {
+const ButtonNavigate = ({ children, onPress, width, style, nameTheme }: ButtonNavigateProps) => {
   const scaleAnimation = useRef(new Animated.Value(1)).current;
   const opacityAnimation = useRef(new Animated.Value(0)).current;
 
@@ -35,18 +41,30 @@ const ButtonNavigate = ({ children, onPress }: ButtonNavigateProps) => {
   }
 
   return (
-    <PressArea onPress={() => {
-      goAnimateButton();
+    <PressArea 
+      width={width}
+      onPress={() => {
+        goAnimateButton();
 
-      onPress();
-    }}>
-      <Area style={{
-        transform: [
-          { scale: scaleAnimation }
-        ],
-        opacity: opacityAnimation
-      }}>
-        <Text>{ children }</Text>
+        if (onPress) {
+          onPress();
+        }
+      }}
+      style={style}
+    >
+      <Area
+        nameTheme={nameTheme}
+        style={{
+          transform: [
+            { scale: scaleAnimation }
+          ],
+          opacity: opacityAnimation
+        }}
+        
+      >
+        <Text nameTheme={nameTheme}>
+          { children }
+        </Text>
       </Area>
     </PressArea>
   )

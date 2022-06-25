@@ -11,8 +11,3 @@ export const Screen = styled.SafeAreaView`
 
   padding: 24px;
 `
-
-export const Text = styled.Text`
-  font-size: 24px;
-  font-weight: bold;
-`;

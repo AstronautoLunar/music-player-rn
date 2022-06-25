@@ -1,5 +1,10 @@
+import { useNavigation } from "@react-navigation/native";
+import { NavigationProp } from "@react-navigation/native";
+
+import RootParamsNativeStackTypes from "../../types/RootParamsNativeStackTypes";
+
 /**COMPONENTS */
-import { Screen, Text } from "./styles";
+import { Screen } from "./styles";
 import { 
   Illustration, 
   Description, 
@@ -7,7 +12,15 @@ import {
 } from "../../components";
 import { IllustrationImage } from "../../svgs";
 
+type WelcomeNavigationType = NavigationProp<RootParamsNativeStackTypes, "Welcome">; 
+
 const WelcomeScreen = () => {
+  const navigation = useNavigation<WelcomeNavigationType>();
+
+  function nextScreen() {
+    navigation.navigate('Password');
+  }
+
   return (
     <Screen>
       <Illustration
@@ -20,9 +33,12 @@ const WelcomeScreen = () => {
         alt="Ilustração"
       />
       <Description>Escute suas músicas ou áudios salvos de qualquer lugar através de seu celular</Description>
-      <ButtonNavigate onPress={() => {
-        console.log("entrou")
-      }}>Entrar</ButtonNavigate>
+      <ButtonNavigate 
+        nameTheme="CTA"
+        onPress={nextScreen}
+      >
+        Entrar
+      </ButtonNavigate>
     </Screen>
   )
 };
