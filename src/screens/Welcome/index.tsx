@@ -1,6 +1,8 @@
+/**CORE */
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProp } from "@react-navigation/native";
 
+/**TYPES */
 import RootParamsNativeStackTypes from "../../types/RootParamsNativeStackTypes";
 
 /**COMPONENTS */

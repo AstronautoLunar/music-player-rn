@@ -1,14 +1,25 @@
+/**CORE */
 import { useRef, useEffect } from "react";
-import { Animated } from "react-native";
+import { Animated, StyleProp } from "react-native";
+
+/**STYLES */
 import { Text } from "./styles";
 
-type DescriptionProps = {
+/**TYPES */
+import { TextProps } from "./styles"; 
+
+type DescriptionProps = TextProps & {
   children: string;
+  style?: any;
 }
 
 const TextAnimation = Animated.createAnimatedComponent(Text);
 
-const Description = ({ children }: DescriptionProps) => {
+const Description = ({ 
+  children,
+  color,
+  style
+}: DescriptionProps) => {
   const opacityAnimation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -22,8 +33,10 @@ const Description = ({ children }: DescriptionProps) => {
   return (
     <TextAnimation
       style={{
-        opacity: opacityAnimation
+        opacity: opacityAnimation,
+        ...style
       }}
+      color={color}
     >
       { children }
     </TextAnimation>
