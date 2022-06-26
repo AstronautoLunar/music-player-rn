@@ -1,10 +1,54 @@
-import { Screen, Text } from "./styles";
+/**CORE */
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+/**SCREENS */
+import MusicsScreen from "../Musics";
+
+/**ICONS */
+import { FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+
+/**STYLES */
+import colors from "../../styles/colors";
+
+/**COMPONENTS */
+import { Switch } from "react-native";
+import { ThemeAreaButton } from "./styles";
+
+const BottomTable = createBottomTabNavigator();
 
 const HomeScreen = () => {
   return (
-    <Screen>
-      <Text>Olá mundo</Text>
-    </Screen>
+    <BottomTable.Navigator
+      screenOptions={{
+        tabBarHideOnKeyboard: true,
+        tabBarStyle: {
+          height: 65,
+          padding: 6,
+        },
+        tabBarLabelStyle: {
+          paddingBottom: 8
+        },
+        headerRight: () => (
+          <ThemeAreaButton>
+            <Feather name="sun" size={24} color={colors['Black']} />
+            <Switch/>
+          </ThemeAreaButton>
+        )
+      }}
+    >
+      <BottomTable.Screen 
+        name="Musics" 
+        component={MusicsScreen}
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <FontAwesome name="file-sound-o" size={size} color={focused ? colors['USAFA Blue'] : colors['Black']} />
+          ),
+          headerTitle: 'Suas músicas',
+          tabBarLabel: 'Músicas'
+        }}
+      />
+    </BottomTable.Navigator>
   )
 };
 
