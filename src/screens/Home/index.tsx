@@ -31,7 +31,12 @@ const HomeScreen = () => {
         },
         headerRight: () => (
           <ThemeAreaButton>
-            <Feather name="sun" size={24} color={colors['Black']} />
+            <Feather 
+              style={{ marginRight: 8 }} 
+              name="sun" 
+              size={24} 
+              color={colors['Black']}
+            />
             <Switch/>
           </ThemeAreaButton>
         )

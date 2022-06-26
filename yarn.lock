@@ -3363,6 +3363,13 @@ expo-asset@~8.5.0:
     path-browserify "^1.0.0"
     url-parse "^1.5.9"
 
+expo-av@~11.2.3:
+  version "11.2.3"
+  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-11.2.3.tgz#254242dae76e3cd60ef9d9c33618e4a12d37aa33"
+  integrity sha512-ptTe96s33Ct0eOsOmNTvtaWFx4B0SDkQmDfPbiuX/C2afqbLQf8geEopw7BRO8ZZl7Qe3qBMH6YLHXKTkZkTyQ==
+  dependencies:
+    "@expo/config-plugins" "^4.0.14"
+
 expo-constants@~13.1.1:
   version "13.1.1"
   resolved "https://registry.npmjs.org/expo-constants/-/expo-constants-13.1.1.tgz"
@@ -3395,6 +3402,13 @@ expo-keep-awake@~10.1.1:
   version "10.1.1"
   resolved "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-10.1.1.tgz"
   integrity sha512-9zC0sdhQljUeMr2yQ7o4kzEZXVAy82fFOAZE1+TwPL7qR0b0sphe7OJ5T1GX1qLcwuVaJ8YewaPoLSHRk79+Rg==
+
+expo-media-library@~14.1.0:
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/expo-media-library/-/expo-media-library-14.1.0.tgz#45302a49444a03d9e6597824bd7295b7bcb38286"
+  integrity sha512-hGXa+4pe6G6WHuNVoGCyBJ6W3VTUg1R63ULIcpXN+mU8k1AfPen/eEFaA3G2FUxdeTvyXJdWZOQY48uDu6I3hg==
+  dependencies:
+    "@expo/config-plugins" "^4.0.14"
 
 expo-modules-autolinking@0.8.1:
   version "0.8.1"
@@ -5826,6 +5840,11 @@ react-native-gradle-plugin@^0.0.6:
   version "0.0.6"
   resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.0.6.tgz"
   integrity sha512-eIlgtsmDp1jLC24dRn43hB3kEcZVqx6DUQbR0N1ABXGnMEafm9I3V3dUUeD1vh+Dy5WqijSoEwLNUPLgu5zDMg==
+
+react-native-music-files@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-music-files/-/react-native-music-files-1.0.7.tgz#84419a6dc13a9ca1442288b99a806bea3de9c593"
+  integrity sha512-+OGvEI+L4uA1B1rsKwS7WV4wP3Qyyu4+8o2Kc6rRdOKqoWeTDN+fS5LECZTmP0WcHUQokYc7GcVCHsdmC/vNlA==
 
 react-native-safe-area-context@4.2.4:
   version "4.2.4"
