@@ -9,11 +9,15 @@ export const Screen = styled.SafeAreaView`
   justify-content: center;
   align-items: center;
 
-  padding-top: ${(barSpaceStatusBar || 0) + 24}px;
-  padding-bottom: 24px;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-top: 24px;
 `
+
+export const ListItemMusics = styled.FlatList`
+  width: 100%;
+
+  padding-left: 16px;
+  padding-right: 16px;
+`;
 
 export const Text = styled.Text`
   font-size: 24px;

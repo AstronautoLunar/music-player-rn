@@ -26,7 +26,8 @@ export default function RouterNavigationScreen() {
           headerShown: false,
           animation: "fade"
         }}
-        initialRouteName={!!password ? 'Home' : 'Welcome'}
+        // initialRouteName={!!password ? 'Home' : 'Welcome'}
+        initialRouteName="Home"
       >
         <NativeStack.Screen name="Welcome" component={WelcomeScreen}/>
         <NativeStack.Screen name="Password" component={PasswordScreen}/>
