@@ -21,10 +21,19 @@ const HomeScreen = () => {
   return (
     <BottomTable.Navigator
       screenOptions={{
+        headerTitleStyle: {
+          color: colors['USAFA Blue']
+        },
+        headerStyle: {
+          backgroundColor: colors['Beau Blue']
+        },
         tabBarHideOnKeyboard: true,
+        tabBarAllowFontScaling: false,
         tabBarStyle: {
           height: 65,
           padding: 6,
+          backgroundColor: colors['Beau Blue'],
+          borderTopColor: colors['Beau Blue']
         },
         tabBarLabelStyle: {
           paddingBottom: 8
@@ -35,7 +44,7 @@ const HomeScreen = () => {
               style={{ marginRight: 8 }} 
               name="sun" 
               size={24} 
-              color={colors['Black']}
+              color={colors['USAFA Blue']}
             />
             <Switch/>
           </ThemeAreaButton>

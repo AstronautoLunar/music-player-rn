@@ -33,6 +33,7 @@ const MusicsScreen = () => {
   return (
     <Screen>
       <ListItemMusics
+        showsVerticalScrollIndicator={false}
         data={assets}
         keyExtractor={(item, index) => String(index)}
         renderItem={({ item }: any) => (
