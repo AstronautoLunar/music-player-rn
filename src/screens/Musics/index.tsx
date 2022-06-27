@@ -7,35 +7,53 @@ import { Audio } from "expo-av";
 import { Screen, ListItemMusics } from "./styles";
 import { ItemMusic } from "../../components";
 
-// type ListRenderItemsProps = {
-//   item: Asset;
-// }
+/**CONTEXTS */
+import { useMusic, CurrentMusicTypes } from "../../contexts/MusicContext";
 
 const MusicsScreen = () => {
-  const [assets, setAssets] = useState([] as Asset[]);
+  // const [assets, setAssets] = useState([] as Asset[]);
+  const { audioObject, currentMusic, musicList, setMusicList } = useMusic();
 
   async function getAssetsAll() {
     const result = await getAssetsAsync({
       mediaType: 'audio',
-      
     });
 
-    console.log(result.assets);
+    setMusicList(result.assets);
+  }
 
-    setAssets(result.assets);
+  async function playMusicCurrent(currentMusic: CurrentMusicTypes) {
+    try {
+      if (currentMusic.uri) {
+        await audioObject.unloadAsync();
+        
+        await audioObject.loadAsync({
+          uri: currentMusic.uri
+        });
+  
+        await audioObject.playAsync();
+  
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
     requestPermissionsAsync()
     getAssetsAll();
   }, []);
+
+  useEffect(() => {
+    playMusicCurrent(currentMusic);
+  }, [ currentMusic ]);
   
   return (
     <Screen>
       <ListItemMusics
         showsVerticalScrollIndicator={false}
-        data={assets}
-        keyExtractor={(item, index) => String(index)}
+        data={musicList}
+        keyExtractor={(_item, index) => String(index)}
         renderItem={({ item }: any) => (
           <ItemMusic
             { ...item }

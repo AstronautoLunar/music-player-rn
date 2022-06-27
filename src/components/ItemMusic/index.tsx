@@ -1,10 +1,19 @@
 /**COMPONENTS */
-import { Area, Text } from "./styles"
+import { 
+  Area, 
+  Text, 
+  PressArea 
+} from "./styles"
 
 /**TYPES */
 import { Asset } from "expo-media-library";
 
-const ItemMusic = ({ filename, duration }: Asset) => {
+/**CONTEXTS */
+import { useMusic } from "../../contexts/MusicContext";
+
+const ItemMusic = ({ filename, duration, uri }: Asset) => {
+  const { setCurrentMusic } = useMusic();
+  
   function createZero(value: number): string {
     return value > 9 ? String(value) : `0${value}`;
   }
@@ -31,15 +40,27 @@ const ItemMusic = ({ filename, duration }: Asset) => {
     return notation;
   }
 
+  function playMusic() {
+    setCurrentMusic({
+      uri,
+      currentTimer: 0,
+      durationTotal: duration,
+      isPlay: true,
+      name: filename
+    });
+  }
+
   return (
-    <Area>
-      <Text>
-        { filename.slice(0, 28) + '...' }
-      </Text>
-      <Text>
-        { convertSecondsInTimeline(duration) }
-      </Text>
-    </Area>
+    <PressArea onPress={playMusic}>
+      <Area>
+        <Text>
+          { filename.slice(0, 28) + '...' }
+        </Text>
+        <Text>
+          { convertSecondsInTimeline(duration) }
+        </Text>
+      </Area>
+    </PressArea>
   )
 }
 

@@ -23,3 +23,5 @@ export const Text = styled.Text`
 export const TextLeft = styled(Text)`
   margin-left: 16px;
 `;
+
+export const PressArea = styled.Pressable``;
