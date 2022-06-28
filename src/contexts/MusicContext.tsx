@@ -1,9 +1,10 @@
 //**CORE */
 import { Asset } from "expo-media-library";
-import { useContext, createContext, useState } from "react";
-import { Audio } from "expo-av";
+import { useContext, createContext, useState, useEffect } from "react";
+import { Audio, AVPlaybackStatus } from "expo-av";
 
 export type CurrentMusicTypes = {
+  id: string;
   name: string;
   durationTotal: number;
   currentTimer: number;
@@ -17,6 +18,8 @@ type MusicContextTypes = {
   currentMusic: CurrentMusicTypes;
   setCurrentMusic: React.Dispatch<React.SetStateAction<CurrentMusicTypes>>;
   audioObject: Audio.Sound;
+  soundStatus: AVPlaybackStatus;
+  setSoundStatus: React.Dispatch<React.SetStateAction<AVPlaybackStatus>>;
 }
 
 const MusicContext = createContext({} as MusicContextTypes);
@@ -28,9 +31,10 @@ type MusicProviderProps = {
 export function MusicProvider({ children }: MusicProviderProps) {
   const sound = new Audio.Sound();
 
+  const [ soundStatus, setSoundStatus ] = useState({} as AVPlaybackStatus);
   const [ musicList, setMusicList ] = useState([] as Asset[]);
   const [ currentMusic, setCurrentMusic ] = useState({} as CurrentMusicTypes);
-
+  
   return (
     <MusicContext.Provider 
       value={{
@@ -38,7 +42,9 @@ export function MusicProvider({ children }: MusicProviderProps) {
         setMusicList,
         currentMusic,
         setCurrentMusic,
-        audioObject: sound
+        audioObject: sound,
+        soundStatus,
+        setSoundStatus
       }}
     >
       { children }

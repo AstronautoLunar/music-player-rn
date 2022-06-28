@@ -11,8 +11,8 @@ import { Asset } from "expo-media-library";
 /**CONTEXTS */
 import { useMusic } from "../../contexts/MusicContext";
 
-const ItemMusic = ({ filename, duration, uri }: Asset) => {
-  const { setCurrentMusic } = useMusic();
+const ItemMusic = ({ filename, duration, uri, id }: Asset) => {
+  const { setCurrentMusic, audioObject } = useMusic();
   
   function createZero(value: number): string {
     return value > 9 ? String(value) : `0${value}`;
@@ -40,8 +40,9 @@ const ItemMusic = ({ filename, duration, uri }: Asset) => {
     return notation;
   }
 
-  function playMusic() {
+  function saveMusic() {
     setCurrentMusic({
+      id,
       uri,
       currentTimer: 0,
       durationTotal: duration,
@@ -51,7 +52,7 @@ const ItemMusic = ({ filename, duration, uri }: Asset) => {
   }
 
   return (
-    <PressArea onPress={playMusic}>
+    <PressArea onPress={saveMusic}>
       <Area>
         <Text>
           { filename.slice(0, 28) + '...' }

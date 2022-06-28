@@ -1,7 +1,6 @@
 /**CORE */
 import { useEffect, useState } from "react";
 import { getAssetsAsync, requestPermissionsAsync, Asset } from "expo-media-library";
-import { Audio } from "expo-av";
 
 /**COMPONENTS */
 import { Screen, ListItemMusics } from "./styles";
@@ -11,8 +10,15 @@ import { ItemMusic } from "../../components";
 import { useMusic, CurrentMusicTypes } from "../../contexts/MusicContext";
 
 const MusicsScreen = () => {
-  // const [assets, setAssets] = useState([] as Asset[]);
-  const { audioObject, currentMusic, musicList, setMusicList } = useMusic();
+  const [ isPlayMusic, setIsPlayMusic ] = useState(false);
+  const { 
+    audioObject, 
+    currentMusic, 
+    musicList, 
+    setMusicList,
+    soundStatus,
+    setSoundStatus
+  } = useMusic();
 
   async function getAssetsAll() {
     const result = await getAssetsAsync({
@@ -24,20 +30,36 @@ const MusicsScreen = () => {
 
   async function playMusicCurrent(currentMusic: CurrentMusicTypes) {
     try {
-      if (currentMusic.uri) {
-        await audioObject.unloadAsync();
-        
-        await audioObject.loadAsync({
-          uri: currentMusic.uri
+      if (!soundStatus.isLoaded) {
+        const status = await audioObject.loadAsync({
+          uri: currentMusic.uri,
+        }, {
+          shouldPlay: true
         });
-  
-        await audioObject.playAsync();
-  
+        
+
+        setSoundStatus(status);
+
+      } else {
+        console.log("Passou");
+
+        audioObject.stopAsync();
+        await audioObject.setStatusAsync({
+          shouldPlay: false
+        });
       }
     } catch (error) {
       console.log(error);
     }
   }
+
+  // async function pauseMusicCurrent() {
+  //   try {
+  //     await audioObject.stopAsync();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   useEffect(() => {
     requestPermissionsAsync()
@@ -46,7 +68,7 @@ const MusicsScreen = () => {
 
   useEffect(() => {
     playMusicCurrent(currentMusic);
-  }, [ currentMusic ]);
+  }, [ currentMusic.id ]);
   
   return (
     <Screen>
