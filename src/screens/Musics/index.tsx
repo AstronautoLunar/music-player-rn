@@ -1,6 +1,7 @@
 /**CORE */
 import { useEffect, useState } from "react";
 import { getAssetsAsync, requestPermissionsAsync, Asset } from "expo-media-library";
+import { Audio, AVPlaybackStatus } from "expo-av";
 
 /**COMPONENTS */
 import { Screen, ListItemMusics } from "./styles";
@@ -9,16 +10,24 @@ import { ItemMusic } from "../../components";
 /**CONTEXTS */
 import { useMusic, CurrentMusicTypes } from "../../contexts/MusicContext";
 
+type MediaPlayerTypes = {
+  sound: Audio.Sound;
+  status: AVPlaybackStatus;
+  mode: "play" | "pause";
+}
+
 const MusicsScreen = () => {
   const [ isPlayMusic, setIsPlayMusic ] = useState(false);
   const { 
-    audioObject, 
     currentMusic, 
     musicList, 
     setMusicList,
-    soundStatus,
-    setSoundStatus
   } = useMusic();
+  const [ mediaPlayer, setMediaPlayer ] = useState({ 
+    sound: new Audio.Sound(),
+    status: {},
+    mode: "pause"
+  } as MediaPlayerTypes);
 
   async function getAssetsAll() {
     const result = await getAssetsAsync({
@@ -28,38 +37,53 @@ const MusicsScreen = () => {
     setMusicList(result.assets);
   }
 
-  async function playMusicCurrent(currentMusic: CurrentMusicTypes) {
+  const sound = new Audio.Sound();
+
+  async function pauseMusicCurrent() {
     try {
-      if (!soundStatus.isLoaded) {
-        const status = await audioObject.loadAsync({
-          uri: currentMusic.uri,
-        }, {
-          shouldPlay: true
-        });
-        
+      await mediaPlayer.sound.setStatusAsync({
+        shouldPlay: false
+      });
 
-        setSoundStatus(status);
+      const status = await mediaPlayer.sound.unloadAsync();
 
-      } else {
-        console.log("Passou");
-
-        audioObject.stopAsync();
-        await audioObject.setStatusAsync({
-          shouldPlay: false
-        });
-      }
+      return setMediaPlayer({
+        sound,
+        status,
+        mode: "pause"
+      });
     } catch (error) {
       console.log(error);
     }
   }
 
-  // async function pauseMusicCurrent() {
-  //   try {
-  //     await audioObject.stopAsync();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  async function playMusicCurrent() {
+    try {
+      const status = await sound.loadAsync({
+        uri: currentMusic.uri,
+      }, {
+        shouldPlay: true
+      });
+      
+      return setMediaPlayer({
+        sound,
+        status,
+        mode: "play"
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function toggleModeMediaPlayer() {
+    console.log(mediaPlayer.mode);
+
+    if (mediaPlayer.mode === "play") {
+      await pauseMusicCurrent();
+    } else {
+      await playMusicCurrent();
+    }
+  }
 
   useEffect(() => {
     requestPermissionsAsync()
@@ -67,7 +91,7 @@ const MusicsScreen = () => {
   }, []);
 
   useEffect(() => {
-    playMusicCurrent(currentMusic);
+    toggleModeMediaPlayer();
   }, [ currentMusic.id ]);
   
   return (

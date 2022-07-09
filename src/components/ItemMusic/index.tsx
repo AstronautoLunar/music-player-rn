@@ -1,3 +1,7 @@
+/**CORE */
+import { useRef } from "react";
+import { Animated } from "react-native";
+
 /**COMPONENTS */
 import { 
   Area, 
@@ -11,7 +15,11 @@ import { Asset } from "expo-media-library";
 /**CONTEXTS */
 import { useMusic } from "../../contexts/MusicContext";
 
+const AreaAnimated = Animated.createAnimatedComponent(Area);
+
 const ItemMusic = ({ filename, duration, uri, id }: Asset) => {
+  const scaleAnimation = useRef(new Animated.Value(1)).current;
+
   const { setCurrentMusic, audioObject } = useMusic();
   
   function createZero(value: number): string {
@@ -41,6 +49,19 @@ const ItemMusic = ({ filename, duration, uri, id }: Asset) => {
   }
 
   function saveMusic() {
+    Animated.sequence([
+      Animated.timing(scaleAnimation, {
+        toValue: 0.9,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleAnimation, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
     setCurrentMusic({
       id,
       uri,
@@ -53,14 +74,20 @@ const ItemMusic = ({ filename, duration, uri, id }: Asset) => {
 
   return (
     <PressArea onPress={saveMusic}>
-      <Area>
+      <AreaAnimated 
+        style={{
+          transform: [
+            { scale: scaleAnimation }
+          ]
+        }}
+      >
         <Text>
           { filename.slice(0, 28) + '...' }
         </Text>
         <Text>
           { convertSecondsInTimeline(duration) }
         </Text>
-      </Area>
+      </AreaAnimated>
     </PressArea>
   )
 }
